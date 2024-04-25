@@ -1,6 +1,7 @@
 package com.itcpa.interceptions;
 
 import com.itcpa.utils.JwtUtil;
+import com.itcpa.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ public class LoginInterception implements HandlerInterceptor {
 
         try {
             Map<String, Object> claims = JwtUtil.parseToken(token);
+            ThreadLocalUtil.set(claims);
             return true;
         } catch (Exception e) {
             response.setStatus(401);
