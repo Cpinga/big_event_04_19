@@ -5,6 +5,9 @@ import com.itcpa.pojo.User;
 import com.itcpa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,5 +33,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(String userName, String password) {
         userMapper.registerUser(userName, password);
+    }
+
+    /**
+     * 修改用户信息
+     * @param user
+     */
+    @Transactional
+    @Override
+    public void update(User user) {
+        user.setUpdateTime(LocalDateTime.now());
+        userMapper.update(user);
     }
 }

@@ -9,16 +9,13 @@ import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 @Validated
 public class UserController {
 
@@ -85,5 +82,16 @@ public class UserController {
         String username = (String) map.get("username");
 
         return Result.success(userService.findByName(username));
+    }
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    @PutMapping("updateUser")
+    public Result updateUserInfo(@RequestBody User user) {
+        userService.update(user);
+        return Result.success();
     }
 }
